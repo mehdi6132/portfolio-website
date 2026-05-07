@@ -3,10 +3,616 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Mehdi Cetinkaya</title>
+  <title>Mehdi Çetinkaya</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --bg:      #0a0a0a;
+      --text:    #f0ece5;
+      --accent:  #00e5a0;
+      --muted:   #4a4a4a;
+      --muted2:  #787878;
+      --border:  rgba(255,255,255,0.06);
+    }
+
+    html { overflow-x: hidden; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── Grain overlay ──────────────────────── */
+    body::after {
+      content: '';
+      position: fixed; inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+      opacity: 0.04;
+      pointer-events: none;
+      z-index: 9000;
+    }
+
+    /* ── Hero ───────────────────────────────── */
+    #hero {
+      height: 100vh;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      overflow: hidden;
+      position: relative;
+    }
+
+
+    .hero-left {
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 0 4rem 5rem;
+      position: relative;
+      z-index: 3;
+    }
+
+    .hero-tag {
+      font-size: 0.6rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 2.2rem;
+      font-weight: 400;
+    }
+
+    /* Serif display name */
+    .rw { overflow: hidden; line-height: 1; padding-bottom: 0.28em; }
+    .rw + .rw { margin-top: 0; }
+    .ri {
+      display: block;
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(5rem, 8.5vw, 9.5rem);
+      font-weight: 400;
+      font-style: normal;
+      letter-spacing: -0.02em;
+      color: var(--text);
+    }
+
+    .sw { overflow: hidden; margin-top: 2.5rem; margin-bottom: 3rem; }
+    .si {
+      display: block;
+      font-size: 0.78rem;
+      color: var(--muted2);
+      line-height: 1.8;
+      letter-spacing: 0.01em;
+      font-weight: 300;
+    }
+
+    .hero-cta { display: flex; gap: 0.8rem; }
+
+    .btn {
+      padding: 0.75rem 1.8rem;
+      border-radius: 2px;
+      font-size: 0.68rem;
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      text-decoration: none;
+      display: inline-block;
+      transition: all 0.3s;
+    }
+    .btn-p {
+      background: var(--accent);
+      color: #0a0a0a;
+    }
+    .btn-p:hover {
+      background: #fff;
+      box-shadow: 0 0 40px rgba(0,229,160,0.15);
+    }
+    .btn-o {
+      border: 1px solid var(--border);
+      color: var(--muted2);
+    }
+    .btn-o:hover {
+      border-color: rgba(255,255,255,0.18);
+      color: var(--text);
+    }
+
+    /* ── Hero photo ─────────────────────────── */
+    .hero-right { position: relative; overflow: hidden; }
+
+    #hPhoto {
+      position: absolute; inset: 0;
+      width: 100%; height: 110%;
+      object-fit: cover;
+      object-position: center 45%;
+      clip-path: inset(0 100% 0 0);
+      transform: scale(1.05);
+    }
+
+    .h-overlay {
+      position: absolute; inset: 0;
+      background:
+        linear-gradient(to right, var(--bg) 0%, rgba(10,10,10,0.3) 40%, transparent 70%),
+        linear-gradient(to top, var(--bg) 0%, transparent 25%);
+      z-index: 1;
+    }
+
+    /* Thin accent line on photo edge */
+    .h-line {
+      position: absolute;
+      left: 0; top: 8%; bottom: 8%;
+      width: 1px;
+      background: linear-gradient(to bottom, transparent, var(--accent), transparent);
+      opacity: 0;
+      z-index: 2;
+    }
+
+    /* ── About ──────────────────────────────── */
+    #about {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6rem;
+      padding: 12rem 4rem;
+      max-width: 1320px;
+      margin: 0 auto;
+    }
+
+    .ab-left {
+      position: sticky;
+      top: 22vh;
+      align-self: start;
+    }
+
+    .sec-label {
+      font-size: 0.58rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 1.6rem;
+      display: block;
+      font-weight: 400;
+    }
+
+    .ab-heading {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(2.4rem, 3.5vw, 3.6rem);
+      font-weight: 400;
+      font-style: italic;
+      line-height: 1.12;
+      color: var(--text);
+    }
+
+    .ab-right { padding-top: 0.2rem; }
+
+    .tl { overflow: hidden; margin-bottom: 2rem; }
+    .ti {
+      display: block;
+      font-size: 0.9rem;
+      color: var(--muted2);
+      line-height: 1.9;
+      font-weight: 300;
+    }
+
+    .ab-meta {
+      margin-top: 3rem;
+      padding-top: 2.5rem;
+      border-top: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      gap: 0.9rem;
+    }
+
+    .meta-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      font-size: 0.76rem;
+      gap: 1rem;
+      padding-bottom: 0.9rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .meta-row:last-child { border-bottom: none; padding-bottom: 0; }
+    .meta-key { color: var(--muted); font-weight: 400; letter-spacing: 0.02em; }
+    .meta-val { color: var(--text); font-weight: 500; text-align: right; }
+
+    /* ── Projects ───────────────────────────── */
+    #projects {
+      padding: 4rem 4rem 10rem;
+      max-width: 1320px;
+      margin: 0 auto;
+      border-top: 1px solid var(--border);
+    }
+
+    .sec-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-bottom: 5rem;
+    }
+
+    .ptw { overflow: hidden; }
+    .pti {
+      display: block;
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(2.4rem, 3.5vw, 3.6rem);
+      font-weight: 400;
+      font-style: italic;
+    }
+
+    .sec-aside {
+      font-size: 0.6rem;
+      color: var(--muted);
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      padding-bottom: 0.4rem;
+    }
+
+    .proj-list { border-top: 1px solid var(--border); }
+
+    .proj-row {
+      display: grid;
+      grid-template-columns: 48px 1fr max-content;
+      align-items: center;
+      gap: 3rem;
+      padding: 2.4rem 0 2.4rem 1.4rem;
+      border-bottom: 1px solid var(--border);
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Hover fill */
+    .proj-row::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: linear-gradient(90deg, rgba(0,229,160,0.025), rgba(255,255,255,0.015));
+      transform: translateX(-101%);
+      transition: transform 0.5s cubic-bezier(0.77,0,0.18,1);
+    }
+    .proj-row:hover::before { transform: translateX(0); }
+
+    /* Accent left border on hover */
+    .proj-row::after {
+      content: '';
+      position: absolute;
+      left: 0; top: 0; bottom: 0;
+      width: 1px;
+      background: var(--accent);
+      transform: scaleY(0);
+      transform-origin: bottom;
+      transition: transform 0.4s cubic-bezier(0.77,0,0.18,1);
+    }
+    .proj-row:hover::after { transform: scaleY(1); }
+
+    .proj-row:hover .pname { color: var(--accent); }
+
+    .pnum {
+      font-size: 0.6rem;
+      color: var(--muted);
+      letter-spacing: 0.12em;
+      position: relative; z-index: 1;
+      font-variant-numeric: tabular-nums;
+    }
+    .pinfo { position: relative; z-index: 1; }
+    .pname {
+      font-size: 1.15rem;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.4rem;
+      transition: color 0.3s;
+      color: var(--text);
+    }
+    .pdesc {
+      font-size: 0.76rem;
+      color: var(--muted2);
+      line-height: 1.6;
+      font-weight: 300;
+    }
+
+    .ptags { display: flex; flex-wrap: wrap; gap: 0.4rem; justify-content: flex-end; position: relative; z-index: 1; }
+    .tag {
+      font-size: 0.58rem;
+      padding: 0.25rem 0.75rem;
+      border-radius: 1px;
+      border: 1px solid var(--border);
+      color: var(--muted2);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    /* ── GitHub link under projects ─────────── */
+    .proj-footer {
+      margin-top: 2.5rem;
+      display: flex;
+      justify-content: flex-end;
+    }
+
+    .proj-gh-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.72rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted2);
+      text-decoration: none;
+      transition: color 0.25s;
+    }
+    .proj-gh-link svg { width: 13px; height: 13px; transition: transform 0.25s; }
+    .proj-gh-link:hover { color: var(--text); }
+    .proj-gh-link:hover svg { transform: translate(2px, -2px); }
+
+
+    /* ── Footer ─────────────────────────────── */
+    footer {
+      padding: 1.6rem 4rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.64rem;
+      color: var(--muted);
+      border-top: 1px solid var(--border);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .c-links { display: flex; gap: 0.5rem; }
+
+    .c-link {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.55rem 1rem;
+      border: 1px solid var(--border);
+      border-radius: 2px;
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.62rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      transition: border-color 0.25s, color 0.25s;
+    }
+    .c-link:hover { border-color: rgba(255,255,255,0.18); color: var(--text); }
+    .c-link svg { width: 13px; height: 13px; fill: currentColor; flex-shrink: 0; }
+
+    /* ── Mobile ─────────────────────────────── */
+    @media (max-width: 768px) {
+      #hero { grid-template-columns: 1fr; }
+      .hero-right { position: absolute; inset: 0; opacity: 0.18; }
+      .hero-left { padding: 0 1.8rem 4rem; }
+      .ri { font-size: clamp(3.8rem, 15vw, 6rem); }
+      #about { grid-template-columns: 1fr; padding: 6rem 1.8rem; gap: 3.5rem; }
+      .ab-left { position: static; }
+      #projects { padding: 4rem 1.8rem 6rem; }
+      .proj-row { grid-template-columns: 1fr; gap: 0.8rem; }
+      .pnum, .ptags { display: none; }
+      footer { flex-direction: column; gap: 0.8rem; padding: 1.5rem 1.8rem; text-align: center; }
+    }
+  </style>
 </head>
 <body>
-  <h1>Coming soon</h1>
-  <p>mehdicetinkaya.com</p>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-left">
+    <span class="hero-tag">Cloud DevOps · Security · AI Enthusiast</span>
+    <div class="rw"><span class="ri">Mehdi</span></div>
+    <div class="rw"><span class="ri">Çetinkaya</span></div>
+    <div class="sw">
+      <span class="si">Cloud DevOps Architect @ Copaco<br>ICT & Infrastructure · Fontys Eindhoven</span>
+    </div>
+    <div class="hero-cta">
+      <a href="#projects" class="btn btn-p">View Work</a>
+      <a href="#about" class="btn btn-o">About</a>
+    </div>
+  </div>
+  <div class="hero-right">
+    <img src="foto.jpeg" alt="Mehdi Çetinkaya" id="hPhoto" />
+    <div class="h-overlay"></div>
+    <div class="h-line" id="hLine"></div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="ab-left">
+    <span class="sec-label">About</span>
+    <h2 class="ab-heading">Engineer.<br>Architect.<br>Builder.</h2>
+  </div>
+  <div class="ab-right">
+    <div class="tl">
+      <span class="ti">
+        I completed a 4-year Software Development program in 2.5 years
+        and earned my propaedeutic diploma with a grade of 9/10.
+      </span>
+    </div>
+    <div class="tl">
+      <span class="ti">
+        Currently pursuing a Bachelor's in ICT & Infrastructure at Fontys,
+        specialising in Cloud Engineering and Cybersecurity — while working
+        part-time as Cloud DevOps Architect at Copaco.
+      </span>
+    </div>
+    <div class="tl">
+      <span class="ti">
+        I design scalable cloud architectures, automate workflows,
+        and build secure API-driven solutions using Azure, GitLab, Terraform and AWS.
+      </span>
+    </div>
+    <div class="ab-meta">
+      <div class="meta-row">
+        <span class="meta-key">Currently</span>
+        <span class="meta-val">Cloud DevOps Architect @ Copaco</span>
+      </div>
+      <div class="meta-row">
+        <span class="meta-key">Studying</span>
+        <span class="meta-val">ICT & Infrastructure · Fontys</span>
+      </div>
+      <div class="meta-row">
+        <span class="meta-key">Open to</span>
+        <span class="meta-val">Security Specialist / Engineer roles</span>
+      </div>
+      <div class="meta-row">
+        <span class="meta-key">Languages</span>
+        <span class="meta-val">Dutch · Turkish · English</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="sec-header">
+    <div>
+      <span class="sec-label">Work</span>
+      <div class="ptw"><span class="pti">Featured Projects</span></div>
+    </div>
+    <span class="sec-aside">04 Selected</span>
+  </div>
+  <div class="proj-list">
+    <div class="proj-row">
+      <span class="pnum">01</span>
+      <div class="pinfo">
+        <h3 class="pname">SOAR Security Platform</h3>
+        <p class="pdesc">Automated monitoring for SSH brute force attacks. Real-time detection and instant alerting — demonstrating SOAR principles and security automation.</p>
+      </div>
+      <div class="ptags">
+        <span class="tag">Python</span>
+        <span class="tag">SOAR</span>
+        <span class="tag">Security</span>
+      </div>
+    </div>
+    <div class="proj-row">
+      <span class="pnum">02</span>
+      <div class="pinfo">
+        <h3 class="pname">Kubernetes Employee Platform</h3>
+        <p class="pdesc">HR creates accounts — cloud workspaces auto-provision in minutes. Container orchestration and full automation on AWS EKS.</p>
+      </div>
+      <div class="ptags">
+        <span class="tag">Kubernetes</span>
+        <span class="tag">AWS EKS</span>
+        <span class="tag">Helm</span>
+      </div>
+    </div>
+    <div class="proj-row">
+      <span class="pnum">03</span>
+      <div class="pinfo">
+        <h3 class="pname">AWS Multi-AZ Infrastructure</h3>
+        <p class="pdesc">Multi-region deployment with automated monitoring, WAF, and blue/green releases. Eliminates downtime through full infrastructure automation.</p>
+      </div>
+      <div class="ptags">
+        <span class="tag">Terraform</span>
+        <span class="tag">AWS</span>
+        <span class="tag">IaC</span>
+      </div>
+    </div>
+    <div class="proj-row">
+      <span class="pnum">04</span>
+      <div class="pinfo">
+        <h3 class="pname">Canvas Study Buddy — Claude MCP</h3>
+        <p class="pdesc">Personal study assistant for Canvas LMS. 29 tools connecting courses, deadlines, grades and feedback in one place — built as a Claude Desktop MCP server.</p>
+      </div>
+      <div class="ptags">
+        <span class="tag">TypeScript</span>
+        <span class="tag">Claude MCP</span>
+        <span class="tag">AI</span>
+      </div>
+    </div>
+  </div>
+  <div class="proj-footer">
+    <a href="https://github.com/mehdi6132" target="_blank" class="proj-gh-link">
+      See more on GitHub
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg>
+    </a>
+  </div>
+</section>
+
+
+<footer>
+  <span>© 2026 Mehdi Çetinkaya</span>
+  <div class="c-links">
+    <a href="https://linkedin.com/in/mehdicetinkaya" target="_blank" class="c-link">
+      <svg viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+      LinkedIn
+    </a>
+    <a href="https://github.com/mehdi6132" target="_blank" class="c-link">
+      <svg viewBox="0 0 24 24"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+      GitHub
+    </a>
+  </div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+<script src="https://unpkg.com/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
+<script>
+  gsap.registerPlugin(ScrollTrigger);
+
+  // Lenis smooth scroll
+  const lenis = new Lenis({ lerp: 0.09, smoothWheel: true });
+  lenis.on('scroll', ScrollTrigger.update);
+  gsap.ticker.add(t => lenis.raf(t * 1000));
+  gsap.ticker.lagSmoothing(0);
+
+  // Initial states
+  gsap.set('.hero-tag', { opacity: 0, y: 10 });
+  gsap.set('.ri',       { y: '110%' });
+  gsap.set('.si',       { y: '105%' });
+  gsap.set('.hero-cta', { opacity: 0, y: 12 });
+  gsap.set('#hPhoto',   { clipPath: 'inset(0 100% 0 0)', scale: 1.05 });
+  gsap.set('#hLine',    { opacity: 0 });
+  gsap.set('.pti',      { y: '110%' });
+  gsap.set('.ti',       { y: '105%' });
+
+  // Hero entrance
+  const tl = gsap.timeline({ defaults: { ease: 'power4.out' } });
+  tl.to('.hero-tag', { opacity: 1, y: 0,  duration: 0.8 }, 0.2)
+    .to('.ri',       { y: '0%',          duration: 1.2, stagger: 0.12 }, 0.38)
+    .to('.si',       { y: '0%',          duration: 1   }, 0.72)
+    .to('.hero-cta', { opacity: 1, y: 0,  duration: 0.7 }, 0.92)
+    .to('#hPhoto',   { clipPath: 'inset(0 0% 0 0)', scale: 1, duration: 1.6, ease: 'power4.inOut' }, 0.45)
+    .to('#hLine',    { opacity: 1,        duration: 1   }, 1.4);
+
+  // Hero photo parallax
+  gsap.to('#hPhoto', {
+    yPercent: 14, ease: 'none',
+    scrollTrigger: { trigger: '#hero', start: 'top top', end: 'bottom top', scrub: true }
+  });
+
+  // About heading
+  gsap.from('.ab-heading', {
+    y: 30, opacity: 0, duration: 1.1, ease: 'power3.out',
+    scrollTrigger: { trigger: '.ab-heading', start: 'top 82%' }
+  });
+
+  // About text lines
+  document.querySelectorAll('.ti').forEach((el, i) => {
+    gsap.to(el, {
+      y: '0%', duration: 1, ease: 'power3.out', delay: i * 0.08,
+      scrollTrigger: { trigger: el.closest('.tl'), start: 'top 84%' }
+    });
+  });
+
+  // Meta rows
+  gsap.from('.meta-row', {
+    y: 12, opacity: 0, stagger: 0.08, duration: 0.7, ease: 'power2.out',
+    scrollTrigger: { trigger: '.ab-meta', start: 'top 87%' }
+  });
+
+  // Projects title
+  gsap.to('.pti', {
+    y: '0%', duration: 1.1, ease: 'power4.out',
+    scrollTrigger: { trigger: '.ptw', start: 'top 83%' }
+  });
+
+  // Project rows — clip-path wipe up
+  document.querySelectorAll('.proj-row').forEach((el, i) => {
+    gsap.from(el, {
+      clipPath: 'inset(0 0 100% 0)', duration: 0.85, ease: 'power3.out', delay: i * 0.1,
+      scrollTrigger: { trigger: el, start: 'top 88%' }
+    });
+  });
+</script>
 </body>
 </html>
